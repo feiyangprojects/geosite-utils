@@ -1,0 +1,2 @@
+#!/usr/bin/bash -e
+deno task protoc-gen-ts_proto

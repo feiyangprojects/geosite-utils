@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "@bufbuild/protobuf": "npm:@bufbuild/protobuf@^2.2.5",
+    "flags_usage": "https://deno.land/x/flags_usage@2.0.0/mod.ts",
+    "ts-proto": "npm:ts-proto@^2.7.0"
+  },
+  "tasks": {
+    "protoc-gen-ts_proto": "protoc-gen-ts_proto"
+  }
+}

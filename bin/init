@@ -1,0 +1,28 @@
+#!/usr/bin/bash -e
+
+while getopts "f" OPT; do
+  case "$OPT" in
+    f) FORCE='1' ;;
+  esac
+done
+
+cd "$(realpath "$(dirname "$0")")/.."
+
+wget --output-document=dlc.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat
+
+if [ ! -d "v2ray" ] || [ -n "$FORCE" ]; then
+    rm --force --recursive v2ray
+
+    mkdir v2ray
+    cd $_
+
+    git init
+    git remote add origin https://github.com/v2fly/v2ray-core.git
+
+    git config core.sparseCheckout true
+    printf 'LICENSE\napp/router/routercommon\ncommon/protoext\n' > .git/info/sparse-checkout
+
+    git pull --depth 1 origin master
+
+    protoc --plugin=protoc-gen-ts_proto="../bin/protoc-gen-ts_proto" --ts_proto_out=. app/router/routercommon/common.proto
+fi
